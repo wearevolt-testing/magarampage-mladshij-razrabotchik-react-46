@@ -3,45 +3,65 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  devtool: 'eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, 'src/app.jsx')
-  ],
-  resolve: {
-    root: [
-      path.resolve(__dirname, "src"),
-    ],
-    extensions: ['', '.js', '.jsx', '.css']
-  },
-  output: {
-    path: path.join(__dirname, '/public/'),
-    filename: '[name].js',
-    publicPath: '/'
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.tpl.html',
-      inject: 'body',
-      filename: 'index.html'
-    }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ],
-  module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel'
-    }, {
-      test: /\.css$/,
-      loader: 'style!css'
-    }]
-  }
+	entry : [
+		'webpack-hot-middleware/client',
+		'./src/index.js'
+	],
+	output: {
+		filename  : 'main.js',
+		path      : path.resolve(__dirname, 'public'),
+ 	},
+
+	module : {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				use : {
+					loader : 'babel-loader',
+					options:
+						{
+							"presets": ["es2015", "stage-0", "react"],
+							"plugins": ["transform-decorators-legacy"]
+						}
+				}
+			},
+			{
+				test: /\.(css|scss)$/,
+				use : ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use     : ['css-loader', 'sass-loader']
+				})
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+				use : [
+					'file-loader'
+				]
+			}
+		]
+	},
+	resolve: {
+		modules   : ["node_modules"],
+		extensions: ['.js', '.jsx', '.css']
+	},
+	devtool: 'eval-source-map',
+	plugins: [
+		new ExtractTextPlugin({
+			filename: 'public/style.css'
+		}),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
+		new HtmlWebpackPlugin({
+			template: './src/index.tpl.html',
+			filename: 'index.html',
+			inject  : 'body'
+		}),
+
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify('development')
+		})
+	]
 };
