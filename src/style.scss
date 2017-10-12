@@ -5,12 +5,29 @@
 .button {
     text-align: center;
     cursor: pointer;
+    width: 1%;
 }
 
 .edit {
-    color: green;
+    color: #005b00;
+    &:hover {
+        color: #00ff00;
+    }
 
 }
+
 .delete {
-    color: red;
+    color: rgba(189, 0, 0, 0.99);
+    &:hover {
+        color: #ff97aa;
+    }
+}
+
+.total {
+    border-top: 2px solid;
+    padding-top: 0.5em;
+}
+
+.d-n {
+    display: none;
 }

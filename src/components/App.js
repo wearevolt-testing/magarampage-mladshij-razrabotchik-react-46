@@ -1,34 +1,27 @@
 import React from 'react';
-import Route from "react-router-dom/es/Route";
 import Landing from "./Landing";
 import Header from './Header';
-import Invoices from "./Invoices";
-import Customers from "./Customers";
-import Products from "./Products";
-import {Switch} from "react-router-dom";
+import Invoices from "./Invoices/Invoices";
+import Customers from "./Customers/Customers";
+import Products from "./Products/Products";
+import {Switch, Route} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
-const NotFound = function () {
-	return (
-		<Status code={404}>
-			<div>
-				<h2> Sorry, cannot find this page</h2>
-			</div>
-		</Status>
-	)
-}
 
 class App extends React.Component {
 
 	render() {
 		return (
 			<div>
+				<Helmet>
+					<title>Invoice App</title>
+				</Helmet>
 				<Header/>
 				<Switch>
 					<Route exact path="/" component={Landing}/>
-					<Route exact path="/invoices" component={Invoices}/>
-					<Route exact path="/customers" component={Customers}/>
-					<Route exact path="/products" component={Products}/>
-					<Route component={NotFound}/>
+					<Route path="/customers" component={Customers}/>
+					<Route path="/products" component={Products}/>
+					<Route path="/invoices" component={Invoices}/>
 				</Switch>
 			</div>
 		)

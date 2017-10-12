@@ -7,17 +7,19 @@ const Header = () => (
 	<Navbar>
 		<Navbar.Header>
 			<Navbar.Brand>
+				<LinkContainer to="/">
 				<a>Invoice App</a>
+				</LinkContainer>
 			</Navbar.Brand>
 		</Navbar.Header>
 		<Nav>
 			<LinkContainer to="/invoices">
 				<NavItem eventKey={1}>Invoices</NavItem>
 			</LinkContainer>
-			<LinkContainer to="products">
+			<LinkContainer to="/products">
 				<NavItem eventKey={2}>Products</NavItem>
 			</LinkContainer>
-			<LinkContainer to="customers">
+			<LinkContainer to="/customers">
 				<NavItem eventKey={3}>Customers</NavItem>
 			</LinkContainer>
 		</Nav>

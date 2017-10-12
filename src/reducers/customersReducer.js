@@ -11,6 +11,10 @@ export default (state = [], action) => {
 			return action.payload
 			break;
 
+		case "DELETE_CUSTOMERS":
+			return action.payload
+			break;
+
 		default:
 			return state
 	}
